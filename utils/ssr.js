@@ -1,15 +1,24 @@
 import auth0 from "./auth0";
 import { attachUserMetadata } from "./user";
 
-export async function optionalAuth({ req }) {
+async function getUserSession(req) {
   const session = await auth0.getSession(req);
 
   if (session && session.user) {
     await attachUserMetadata(session.user);
+    return session.user;
+  }
 
+  return null;
+}
+
+export async function optionalAuth({ req }) {
+  const user = await getUserSession(req);
+
+  if (user) {
     return {
       props: {
-        user: session.user,
+        user,
       },
     };
   }
@@ -18,12 +27,12 @@ export async function optionalAuth({ req }) {
 }
 
 export async function requiredAuth({ req, res }) {
-  const session = await auth0.getSession(req);
+  const user = await getUserSession(req);
 
-  if (session && session.user) {
+  if (user) {
     return {
       props: {
-        user: session.user,
+        user,
       },
     };
   }
