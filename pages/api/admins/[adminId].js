@@ -5,7 +5,7 @@ import { initDatabase } from "../../../utils/mongodb";
 async function deleteAdmin(adminId, user) {
   if (adminId === user._id) {
     throw {
-      statusCode: 400,
+      status: 400,
       message: "Cannot revoke admin from self"
     }
   }
@@ -27,7 +27,7 @@ async function deleteAdmin(adminId, user) {
 
   if (!result.value) {
     throw {
-      statusCode: 404,
+      status: 404,
       message: "User not found"
     }
   }
