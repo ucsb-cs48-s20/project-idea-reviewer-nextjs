@@ -15,6 +15,7 @@ async function deleteAdmin(adminId, user) {
 
   const query = {
     _id: ObjectId(adminId),
+    role: "admin",
   };
 
   const mutation = {
