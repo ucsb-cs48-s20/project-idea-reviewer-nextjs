@@ -26,19 +26,28 @@ export async function optionalAuth({ req }) {
   return { props: {} };
 }
 
-export async function requiredAuth({ req, res }) {
-  const user = await getUserSession(req);
+export function createRequiredAuth({ roles = [] }) {
+  return async function ({ req, res }) {
+    const user = await getUserSession(req);
 
-  if (user) {
-    return {
-      props: {
-        user,
-      },
-    };
-  }
+    if (user) {
+      if (roles.includes(user.role)) {
+        return {
+          props: {
+            user,
+          },
+        };
+      }
 
-  res.writeHead(302, {
-    Location: "/api/login",
-  });
-  res.end();
+      res.writeHead(302, {
+        Location: "/",
+      });
+      res.end();
+    }
+
+    res.writeHead(302, {
+      Location: "/api/login",
+    });
+    res.end();
+  };
 }
