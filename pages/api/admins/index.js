@@ -1,7 +1,7 @@
 import { authenticatedAction } from "../../../utils/api";
 import { initDatabase } from "../../../utils/mongodb";
 
-async function getAdmins() {
+export async function getAdmins() {
   const client = await initDatabase();
   const users = client.collection("users");
 

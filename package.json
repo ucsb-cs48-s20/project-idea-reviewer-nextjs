@@ -18,11 +18,14 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.11.0",
     "bootstrap": "^4.4.1",
+    "isomorphic-unfetch": "^3.0.0",
     "mongodb": "^3.5.5",
     "next": "9.3.4",
     "react": "16.13.1",
     "react-bootstrap": "^1.0.0",
-    "react-dom": "16.13.1"
+    "react-bootstrap-table-next": "^4.0.0",
+    "react-dom": "16.13.1",
+    "swr": "^0.2.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

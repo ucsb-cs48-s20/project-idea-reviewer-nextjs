@@ -25,7 +25,17 @@ function AppNavbar(props) {
         </Link>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Nav className="mr-auto"></Nav>
+          <Nav className="mr-auto">
+            {user?.role === "admin" && (
+              <NavDropdown title="Admin">
+                <Link href="/admin/admins" passHref>
+                  <NavDropdown.Item href="/admin/admins">
+                    Manage Admins
+                  </NavDropdown.Item>
+                </Link>
+              </NavDropdown>
+            )}
+          </Nav>
           <Nav>
             {user ? (
               <NavDropdown
