@@ -13,7 +13,7 @@ export function authenticatedAction(actionFn) {
       res.end(JSON.stringify(actionResult));
     } catch (error) {
       console.error(error);
-      res.status(error.status || 500).end(error.message);
+      res.status(error.status || 500).end(error.message && JSON.stringify({ message: error.message}) );
     }
   });
 
