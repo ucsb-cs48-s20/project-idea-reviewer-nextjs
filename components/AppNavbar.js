@@ -6,6 +6,14 @@ import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 
+function roleToString(role) {
+  if (role === "admin") {
+    return "Admin";
+  }
+
+  return "Guest";
+}
+
 function AppNavbar(props) {
   const user = props.user;
 
@@ -24,7 +32,7 @@ function AppNavbar(props) {
               <NavDropdown
                 title={
                   <>
-                    Hi, {user.name}
+                    Hi, {user.name} ({roleToString(user.role)})
                     <Image
                       className="ml-2"
                       src={user.picture}

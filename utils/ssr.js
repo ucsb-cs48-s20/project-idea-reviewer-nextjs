@@ -1,9 +1,12 @@
 import auth0 from "./auth0";
+import { attachRoleInformation } from "./user";
 
 export async function optionalAuth({ req }) {
   const session = await auth0.getSession(req);
 
   if (session && session.user) {
+    await attachRoleInformation(session.user);
+
     return {
       props: {
         user: session.user,
