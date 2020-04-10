@@ -5,8 +5,5 @@ export const getServerSideProps = optionalAuth;
 
 export default function HomePage(props) {
   const user = props.user;
-  return (
-    <Layout user={user}>
-    </Layout>
-  );
+  return <Layout user={user}></Layout>;
 }

@@ -1,5 +1,5 @@
-import { MongoClient } from "mongodb"
-import config from "./config"
+import { MongoClient } from "mongodb";
+import config from "./config";
 
 const client = new MongoClient(config.MONGODB_URI, { useNewUrlParser: true });
 

@@ -11,7 +11,7 @@ if (typeof window === "undefined") {
     POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
     SESSION_COOKIE_SECRET: process.env.SESSION_COOKIE_SECRET,
     SESSION_COOKIE_LIFETIME: process.env.SESSION_COOKIE_LIFETIME,
-    MONGODB_URI: process.env.MONGODB_URI
+    MONGODB_URI: process.env.MONGODB_URI,
   };
 } else {
   /**

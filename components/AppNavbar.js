@@ -25,8 +25,7 @@ function AppNavbar(props) {
         </Link>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Nav className="mr-auto">
-          </Nav>
+          <Nav className="mr-auto"></Nav>
           <Nav>
             {user ? (
               <NavDropdown

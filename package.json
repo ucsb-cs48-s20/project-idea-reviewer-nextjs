@@ -10,6 +10,11 @@
     "test": "npm-run-all test:*",
     "test:format": "prettier --check \"**/*.{js,json,md}\" --ignore-path .gitignore"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.11.0",
     "bootstrap": "^4.4.1",

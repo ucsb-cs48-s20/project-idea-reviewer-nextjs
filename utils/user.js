@@ -1,4 +1,4 @@
-import { initDatabase } from "./mongodb"
+import { initDatabase } from "./mongodb";
 
 export async function attachUserMetadata(user) {
   const client = await initDatabase();
@@ -8,6 +8,6 @@ export async function attachUserMetadata(user) {
 
   if (result) {
     user._id = result._id.toString();
-    user.role = result.role || "guest"
+    user.role = result.role || "guest";
   }
 }

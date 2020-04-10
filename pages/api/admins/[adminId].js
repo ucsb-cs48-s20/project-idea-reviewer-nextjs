@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb"
+import { ObjectId } from "mongodb";
 import { authenticatedAction } from "../../../utils/api";
 import { initDatabase } from "../../../utils/mongodb";
 
@@ -6,8 +6,8 @@ async function deleteAdmin(adminId, user) {
   if (adminId === user._id) {
     throw {
       status: 400,
-      message: "Cannot revoke admin from self"
-    }
+      message: "Cannot revoke admin from self",
+    };
   }
 
   const client = await initDatabase();
@@ -19,27 +19,29 @@ async function deleteAdmin(adminId, user) {
 
   const mutation = {
     $unset: {
-      role: true
-    }
+      role: true,
+    },
   };
 
-  const result = await users.findOneAndUpdate(query, mutation, { returnOriginal: false });
+  const result = await users.findOneAndUpdate(query, mutation, {
+    returnOriginal: false,
+  });
 
   if (!result.value) {
     throw {
       status: 404,
-      message: "User not found"
-    }
+      message: "User not found",
+    };
   }
 
-  return result.value
+  return result.value;
 }
 
 async function performAction(req, user) {
   const { adminId } = req.query;
 
   if (user.role !== "admin") {
-    throw { status: 403 }
+    throw { status: 403 };
   }
 
   switch (req.method) {
@@ -47,8 +49,7 @@ async function performAction(req, user) {
       return deleteAdmin(adminId, user);
   }
 
-
-  throw { status: 405 }
+  throw { status: 405 };
 }
 
-export default authenticatedAction(performAction)
+export default authenticatedAction(performAction);
