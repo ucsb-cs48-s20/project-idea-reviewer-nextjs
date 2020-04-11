@@ -8,7 +8,7 @@ function Layout(props) {
   return (
     <>
       <AppNavbar user={user} />
-      <Container>{props.children}</Container>
+      <Container className="py-3">{props.children}</Container>
       <AppFooter />
     </>
   );
