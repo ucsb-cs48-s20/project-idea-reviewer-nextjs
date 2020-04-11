@@ -10,6 +10,7 @@ import { getAdmins } from "../api/admins";
 import Layout from "../../components/Layout";
 import { createRequiredAuth } from "../../utils/ssr";
 import { serializeDocument } from "../../utils/mongodb";
+import { useToasts } from "../../components/Toasts";
 
 export const getServerSideProps = async ({ req, res }) => {
   const ssr = await createRequiredAuth({ roles: ["admin"] })({ req, res });
@@ -40,25 +41,33 @@ function getColumnsWithActions(actionsFn) {
 
 export default function ManageAdminsPage(props) {
   const { user, initialData } = props;
-
+  const { showToast } = useToasts();
   const { data, mutate } = useSWR("/api/admins", { initialData });
-
   const [newAdminEmail, setNewAdminEmail] = useState("");
 
-  const addAdmin = useCallback(async () => {
-    setNewAdminEmail("");
-    await mutate([...data, { email: newAdminEmail }], false);
-    await fetch("/api/admins", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: newAdminEmail }),
-    });
-    await mutate();
-  }, [newAdminEmail]);
+  const addAdmin = useCallback(
+    async (e) => {
+      // override default form submission behavior
+      e.preventDefault();
+      e.stopPropagation();
+
+      setNewAdminEmail("");
+      showToast(`Added admin ${newAdminEmail}`);
+      await mutate([...data, { email: newAdminEmail }], false);
+      await fetch("/api/admins", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: newAdminEmail }),
+      });
+      await mutate();
+    },
+    [newAdminEmail]
+  );
 
   const deleteAdmin = useCallback(async (adminId) => {
+    showToast(`Deleted admin ${data.find((u) => u._id === adminId)?.email}`);
     await mutate(
       data.filter((u) => u._id !== adminId),
       false
@@ -85,7 +94,7 @@ export default function ManageAdminsPage(props) {
         <title>Manage Admins</title>
       </Head>
       <h1>Manage Admins</h1>
-      <Form className="mb-5">
+      <Form onSubmit={addAdmin} className="mb-5">
         <Form.Group>
           <Form.Label>Email Address</Form.Label>
           <FormControl
@@ -94,7 +103,7 @@ export default function ManageAdminsPage(props) {
             onChange={(e) => setNewAdminEmail(e.target.value)}
           />
         </Form.Group>
-        <Button onClick={addAdmin}>Add Admin</Button>
+        <Button type="submit">Add Admin</Button>
       </Form>
       <BootstrapTable keyField="_id" data={data} columns={columns} />
     </Layout>
