@@ -1,3 +1,4 @@
+import validate from "validate.js";
 import { authenticatedAction } from "../../../utils/api";
 import { initDatabase } from "../../../utils/mongodb";
 
@@ -16,20 +17,35 @@ export async function getStudents(section) {
   return users.find(query).toArray();
 }
 
-async function createStudent(req) {
-  const { email, section } = req.body;
+const studentConstraints = {
+  email: {
+    presence: true,
+    email: true,
+  },
+  section: {
+    presence: true,
+  },
+};
 
-  if (!email || !section) {
+async function createStudent(req) {
+  let student;
+
+  try {
+    student = await validate.async(req.body, studentConstraints, {
+      cleanAttributes: true,
+      format: "flat",
+    });
+  } catch (err) {
     throw {
       status: 400,
-      message: "Missing email or section",
+      message: err.join(", "),
     };
   }
 
   const client = await initDatabase();
   const users = client.collection("users");
 
-  const user = await users.findOne({ email });
+  const user = await users.findOne({ email: student.email });
 
   if (user.role === "admin" || user.role === "student") {
     throw {
@@ -37,14 +53,14 @@ async function createStudent(req) {
       message: "User already exists; cannot be converted to a student",
     };
   }
-  const query = { email };
+  const query = { student: student.email };
   const mutation = {
     $setOnInsert: {
-      email,
+      student: student.email,
     },
     $set: {
       role: "student",
-      section,
+      section: student.section,
     },
   };
 
