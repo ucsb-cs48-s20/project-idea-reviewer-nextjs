@@ -7,11 +7,14 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 
 function roleToString(role) {
-  if (role === "admin") {
-    return "Admin";
+  switch (role) {
+    case "admin":
+      return "Admin";
+    case "student":
+      return "Student";
+    default:
+      return "Guest";
   }
-
-  return "Guest";
 }
 
 function AppNavbar(props) {
