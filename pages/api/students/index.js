@@ -47,16 +47,18 @@ async function createStudent(req) {
 
   const user = await users.findOne({ email: student.email });
 
-  if (user.role === "admin" || user.role === "student") {
-    throw {
-      status: 409,
-      message: "User already exists; cannot be converted to a student",
-    };
+  if (user != null) {
+    if (user.role === "admin" || user.role === "student") {
+      throw {
+        status: 409,
+        message: "User already exists; cannot be converted to a student",
+      };
+    }
   }
-  const query = { student: student.email };
+  const query = { email: student.email };
   const mutation = {
     $setOnInsert: {
-      student: student.email,
+      email: student.email,
     },
     $set: {
       role: "student",

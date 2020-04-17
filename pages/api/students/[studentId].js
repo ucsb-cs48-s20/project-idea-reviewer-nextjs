@@ -33,7 +33,7 @@ async function deleteStudent(studentId) {
 }
 
 async function performAction(req, user) {
-  const { adminId: studentId } = req.query;
+  const { studentId: studentId } = req.query;
 
   if (user.role !== "admin") {
     throw { status: 403 };
