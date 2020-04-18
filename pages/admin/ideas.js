@@ -71,7 +71,7 @@ function getColumnsWithActions(actionsFn) {
   ];
 }
 
-const rowStyle = { wordBreak: "break-all" };
+const rowStyle = { wordBreak: "break-word" };
 
 export default function ManageAdminsPage(props) {
   const { user, initialData } = props;
