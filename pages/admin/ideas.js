@@ -20,7 +20,7 @@ export const getServerSideProps = async ({ req, res }) => {
   return ssr;
 };
 
-function getColumns() {
+function getColumnsWithActions(actionsFn) {
   return [
     {
       dataField: "_id",
@@ -62,6 +62,12 @@ function getColumns() {
         return totalScore / reviews.length;
       },
     },
+    {
+      dataField: "df3",
+      isDummyField: true,
+      text: "Actions",
+      formatter: actionsFn,
+    },
   ];
 }
 
@@ -69,9 +75,26 @@ const rowStyle = { wordBreak: "break-all" };
 
 export default function ManageAdminsPage(props) {
   const { user, initialData } = props;
-  const { data } = useSWR("/api/ideas", { initialData });
+  const { showToast } = useToasts();
+  const { data, mutate } = useSWR("/api/ideas", { initialData });
 
-  const columns = getColumns();
+  const deleteId = useCallback(async (ideaId) => {
+    showToast(`Deleted idea ${data.find((u) => u._id === ideaId)?.title}`);
+    await mutate(
+      data.filter((u) => u._id !== ideaId),
+      false
+    );
+    await fetch(`/api/ideas/${ideaId}`, { method: "DELETE" });
+    await mutate();
+  }, []);
+
+  const columns = getColumnsWithActions((_, row) => {
+    return (
+      <Button variant="danger" onClick={() => deleteId(row._id)}>
+        Delete
+      </Button>
+    );
+  });
 
   return (
     <Layout user={user}>
