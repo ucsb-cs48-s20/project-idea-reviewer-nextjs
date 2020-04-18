@@ -20,11 +20,29 @@ export const getServerSideProps = async ({ req, res }) => {
   return ssr;
 };
 
+const sortCaret = (order) => {
+  if (!order) return <span>&nbsp;&nbsp;Down/Up</span>;
+  else if (order === "asc")
+    return (
+      <span>
+        &nbsp;&nbsp;Down/<span style={{ color: "var(--red)" }}>Up</span>
+      </span>
+    );
+  else if (order === "desc")
+    return (
+      <span>
+        &nbsp;&nbsp;<span style={{ color: "var(--red)" }}>Down</span>/Up
+      </span>
+    );
+  return null;
+};
+
 function getColumnsWithActions(actionsFn) {
   return [
     {
       dataField: "_id",
       text: "User ID",
+      sort: true,
     },
     {
       dataField: "author",
@@ -42,6 +60,9 @@ function getColumnsWithActions(actionsFn) {
       dataField: "df1",
       isDummyField: true,
       text: "# Reviews",
+      sort: true,
+      sortCaret,
+      sortValue: (_, row) => row?.reviews?.length || 0,
       formatter: (_, row) => row?.reviews?.length || 0,
     },
     {
