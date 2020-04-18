@@ -31,6 +31,9 @@ function AppNavbar(props) {
           <Nav className="mr-auto">
             {user?.role === "admin" && (
               <NavDropdown title="Admin">
+                <Link href="/admin/ideas" passHref>
+                  <NavDropdown.Item>Manage Ideas</NavDropdown.Item>
+                </Link>
                 <Link href="/admin/admins" passHref>
                   <NavDropdown.Item href="/admin/admins">
                     Manage Admins
