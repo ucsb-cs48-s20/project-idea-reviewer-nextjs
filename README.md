@@ -26,3 +26,5 @@ You'll need to put the specific MongoDB URI for your database (copying in the co
 ```
 MONGODB_URI=mongodb+srv://db-user-here:actual-password-here@cluster0-6c3fw.mongodb.net/test?retryWrites=true&w=majority
 ```
+
+NOTE: This URI above is _only an example_ and is _totally fake_. All of the parts of the URI will be _specific_ to the MongoDB cluster you create, not just the user and password. So please go through the setup instructions in detail to generate your own proper MongoDB Connection String.
