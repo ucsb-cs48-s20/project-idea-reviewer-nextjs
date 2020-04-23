@@ -7,11 +7,20 @@ add yourself as an admin user.
 
    ![collections](./images/collections.png)
 
-2. Click "+ Create Database" to create a database. Make sure you name it "database" and create a collection called "users".
+2. If you see "+ Create Database", click that to create a database.
+
+   If instead, you see
+   the following, click the "Add your own Data" button.
+
+   ![collections](./images/first-time-collection.png)
+
+3. You should now see the "Create Database" dialog as shown below. Give your database the name
+   `database` (literally) and create a collection called `users`. It is important to use
+   these exact names; they are referenced in the source code.
 
    ![create-database](./images/create-database.png)
 
-3. Click "Insert Document" to insert a document into the "users" collection.
+4. Click "Insert Document" to insert a document into the "users" collection.
    You will be shown a modal with a JSON-like editor.
    You will need to specify two fields, one with a key called "email" and a value matching your email address,
    and one with a key called "role" with the value "admin".
