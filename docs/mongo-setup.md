@@ -25,4 +25,8 @@ add yourself as an admin user.
    You will need to specify two fields, one with a key called "email" and a value matching your email address,
    and one with a key called "role" with the value "admin".
 
+   As in the image below, it may *appear* that there is a trailing space when editing the value; this appears to
+   be a quirk/bug with the MongoDB user interface.   Don't stress over it; just save the values, and you should see that 
+   after saving, this trailing space goes away.
+
    ![insert-admin](./images/insert-admin.png)
