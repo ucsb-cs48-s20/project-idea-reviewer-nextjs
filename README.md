@@ -47,3 +47,8 @@ fake_. All of the parts of the URI will be _specific_ to the MongoDB
 cluster you create, not just the user and password. So please go
 through the setup instructions in detail to generate your own proper
 MongoDB Connection String.
+
+# Setup of initial admin user
+
+After setting up a MongoDB cluster and obtaining the MONGODB_URI, to
+set up an initial admin user, follow the instructions in [/docs/mongo-setup.md](./docs/mongo-setup.md).
