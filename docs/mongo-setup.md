@@ -28,5 +28,9 @@ add yourself as an admin user.
    As in the image below, it may *appear* that there is a trailing space when editing the value; this appears to
    be a quirk/bug with the MongoDB user interface.   Don't stress over it; just save the values, and you should see that 
    after saving, this trailing space goes away.
+   
+   Also, unlike editing a JSON record, in this user interface, there should **not** be `""` around the keys
+   on the left hand side of the `:`, so `user : "cgaucho@ucsb.edu"` not `"user" : "cgaucho@ucsb.edu"`.  Similarly, there
+   are no trailing commas after each key/value pair.
 
    ![insert-admin](./images/insert-admin.png)
