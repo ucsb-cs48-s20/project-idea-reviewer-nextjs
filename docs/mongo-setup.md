@@ -12,7 +12,7 @@ add yourself as an admin user.
    If instead, you see
    the following, click the "Add your own Data" button.
 
-   ![collections](./images/first-time-collection.png)
+   ![collections](./images/first-time-collection-50.png)
 
 3. You should now see the "Create Database" dialog as shown below. Give your database the name
    `database` (literally) and create a collection called `users`. It is important to use
