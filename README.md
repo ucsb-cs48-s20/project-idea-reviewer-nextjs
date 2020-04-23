@@ -51,4 +51,4 @@ MongoDB Connection String.
 # Setup of initial admin user
 
 After setting up a MongoDB cluster and obtaining the MONGODB_URI, to
-set up an initial admin user, follow the instructions in [/docs/mongo-setup.md](./docs/mongo-setup.md).
+set up an initial admin user, follow the instructions in [docs/mongo-setup.md](./docs/mongo-setup.md).
