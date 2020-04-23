@@ -24,7 +24,7 @@ This application requires a connection to a MongoDB database.
 The required `.env` value is `MONGODB_URI`, which should be set to the connection
 string for the MongoDB Cluster you will use for development.
 
-Optionally, you may also defined two additional `.env` values if you have
+Optionally, you may also define two additional `.env` values if you have
 separate databases for production and staging sites
 
 - To get the value from `MONGODB_URI_PRODUCTION`, `export NODE_ENV=production`
