@@ -1,16 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import Head from "next/head";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
 import BootstrapTable from "react-bootstrap-table-next";
-import { getIdeas } from "../api/ideas";
-import Layout from "../../components/Layout";
-import { createRequiredAuth } from "../../utils/ssr";
-import { serializeDocument } from "../../utils/mongodb";
-import { useToasts } from "../../components/Toasts";
+import { getIdeas } from "./api/ideas";
+import Layout from "../components/Layout";
+import { createRequiredAuth } from "../utils/ssr";
+import { serializeDocument } from "../utils/mongodb";
+import { useToasts } from "../components/Toasts";
 
 export const getServerSideProps = async ({ req, res }) => {
   const ssr = await createRequiredAuth({ roles: ["admin"] })({ req, res });
@@ -41,25 +39,13 @@ function getColumnsWithActions(actionsFn) {
   return [
     {
       dataField: "_id",
-      text: "User ID",
+      text: "id",
       sort: true,
-    },
-    {
-      dataField: "author",
-      text: "Author",
-    },
-    {
-      dataField: "title",
-      text: "Title",
-    },
-    {
-      dataField: "description",
-      text: "Description",
     },
     {
       dataField: "df1",
       isDummyField: true,
-      text: "# Reviews",
+      text: "# reviews",
       sort: true,
       sortCaret,
       sortValue: (_, row) => row?.reviews?.length || 0,
@@ -68,7 +54,7 @@ function getColumnsWithActions(actionsFn) {
     {
       dataField: "df2",
       isDummyField: true,
-      text: "Average Rating",
+      text: "avg rating",
       formatter: (_, row) => {
         const reviews = row?.reviews;
 
@@ -84,15 +70,36 @@ function getColumnsWithActions(actionsFn) {
       },
     },
     {
+      dataField: "title",
+      text: "title",
+    },
+    {
+      dataField: "description",
+      text: "details",
+    },
+    {
+      dataField: "author.fname",
+      text: "first",
+      isDummyField: true,
+    },
+    {
+      dataField: "author.lname",
+      text: "last",
+      isDummyField: true,
+    },
+    {
+      dataField: "author.email",
+      text: "email",
+      isDummyField: true,
+    },
+    {
       dataField: "df3",
       isDummyField: true,
-      text: "Actions",
+      text: "delete",
       formatter: actionsFn,
     },
   ];
 }
-
-const rowStyle = { wordBreak: "break-word" };
 
 export default function ManageAdminsPage(props) {
   const { user, initialData } = props;
@@ -123,12 +130,14 @@ export default function ManageAdminsPage(props) {
         <title>Manage Ideas</title>
       </Head>
       <h1>Manage Ideas</h1>
-      <BootstrapTable
-        keyField="_id"
-        data={data}
-        columns={columns}
-        rowStyle={rowStyle}
-      />
+      <BootstrapTable keyField="_id" data={data} columns={columns} />
+      <style jsx global>{`
+        .table {
+          overflow: auto;
+          display: block;
+          table-layout: auto;
+        }
+      `}</style>
     </Layout>
   );
 }

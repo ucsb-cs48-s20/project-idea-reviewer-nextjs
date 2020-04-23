@@ -30,16 +30,16 @@ function AppNavbar(props) {
         <Navbar.Collapse className="justify-content-end">
           <Nav className="mr-auto">
             {user?.role === "admin" && (
-              <NavDropdown title="Admin">
-                <Link href="/admin/ideas" passHref>
-                  <NavDropdown.Item>Manage Ideas</NavDropdown.Item>
+              <>
+                <Link href="/ideas" passHref>
+                  <Nav.Link>Ideas</Nav.Link>
                 </Link>
-                <Link href="/admin/admins" passHref>
-                  <NavDropdown.Item href="/admin/admins">
-                    Manage Admins
-                  </NavDropdown.Item>
-                </Link>
-              </NavDropdown>
+                <NavDropdown title="Admin">
+                  <Link href="/admin/admins" passHref>
+                    <NavDropdown.Item>Manage Admins</NavDropdown.Item>
+                  </Link>
+                </NavDropdown>
+              </>
             )}
           </Nav>
           <Nav>
