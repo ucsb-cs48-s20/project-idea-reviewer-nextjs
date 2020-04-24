@@ -3,6 +3,7 @@ import fetch from "isomorphic-unfetch";
 import { ToastProvider } from "../components/Toasts";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import React from "react";
 
 function MyApp({ Component, pageProps }) {
   return (
