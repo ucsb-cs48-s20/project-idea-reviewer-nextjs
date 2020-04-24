@@ -36,7 +36,10 @@ function AppNavbar(props) {
                 </Link>
                 <NavDropdown title="Admin">
                   <Link href="/admin/admins" passHref>
-                    <NavDropdown.Item>Manage Admins</NavDropdown.Item>
+                    <NavDropdown.Item>Manage Students</NavDropdown.Item>
+                  </Link>
+                  <Link href="/admin/admins" passHref>
+                    <NavDropdown.Item>Manage Students</NavDropdown.Item>
                   </Link>
                 </NavDropdown>
               </>
