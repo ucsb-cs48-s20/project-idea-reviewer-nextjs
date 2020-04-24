@@ -47,7 +47,7 @@ async function createStudent(req) {
 
   const user = await users.findOne({ email: student.email });
 
-  if (user.role === "admin" || user.role === "student") {
+  if (user && (user.role === "admin" || user.role === "student")) {
     throw {
       status: 409,
       message: "User already exists; cannot be converted to a student",

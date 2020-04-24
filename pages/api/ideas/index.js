@@ -65,10 +65,6 @@ async function createIdea(req, user) {
 async function performAction(req, user) {
   const { section } = req.query;
 
-  if (user.role !== "student") {
-    throw { status: 403 };
-  }
-
   switch (req.method) {
     case "GET":
       if (user.role !== "admin") {
