@@ -1,4 +1,4 @@
-import { reformatEmail } from "../utils/email.js";
+import { reformatEmail } from "../utils/email";
 
 describe("", () => {
   it("converts @umail.ucsb.edu to @ucsb.edu", () => {
