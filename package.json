@@ -10,7 +10,8 @@
     "fix:format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .gitignore",
     "test": "npm-run-all test:*",
     "test:format": "prettier --check \"**/*.{js,json,md}\" --ignore-path .gitignore",
-    "test:cypress": "start-server-and-test dev 3000 cy:run"
+    "test:cypress": "start-server-and-test dev 3000 cy:run",
+    "danger": "danger"
   },
   "husky": {
     "hooks": {
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@rckeller/cypress-unfetch": "^1.0.1",
     "cypress": "^4.2.0",
+    "danger": "^10.0.0",
     "heroku-dotenv": "^0.4.1",
     "husky": "^4.2.3",
     "npm-run-all": "^4.1.5",
