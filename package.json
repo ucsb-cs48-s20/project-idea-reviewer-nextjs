@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p $PORT",
     "fix:format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .gitignore",
-    "test": "npm-run-all test:*",
+    "test": "jest",
     "test:format": "prettier --check \"**/*.{js,json,md}\" --ignore-path .gitignore"
   },
   "husky": {
