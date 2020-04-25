@@ -2,6 +2,17 @@
 
 A nextjs version of https://github.com/ucsb-cs48-s20/project-idea-reviewer
 
+# Commands
+
+These likely will not work until initial configuration is done per instructions below.
+
+| Command                | Description                              |
+| ---------------------- | ---------------------------------------- |
+| `npm run test`         | Runs entire test suite                   |
+| `npm run test:format`  | Checks the project for formatting issues |
+| `npm run test:cypress` | Runs Cypress integration tests           |
+| `npm run fix:format`   | Reformats all project files              |
+
 # Configuration of `.env`
 
 Before this app will work, you need to:
