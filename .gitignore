@@ -40,5 +40,7 @@ yarn-error.log*
 # local env files
 .env
 
+cypress.env.json
+
 *.idea
 *.iml
