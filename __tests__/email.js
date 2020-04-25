@@ -1,6 +1,6 @@
 import { reformatEmail } from "../utils/email";
 
-describe("", () => {
+describe("emails", () => {
   it("converts @umail.ucsb.edu to @ucsb.edu", () => {
     expect(reformatEmail("tkomarlu@umail.ucsb.edu")).toBe("tkomarlu@ucsb.edu");
   });
