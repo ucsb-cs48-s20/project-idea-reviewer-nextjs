@@ -63,3 +63,12 @@ MongoDB Connection String.
 
 After setting up a MongoDB cluster and obtaining the MONGODB_URI, to
 set up an initial admin user, follow the instructions in [docs/mongo-setup.md](./docs/mongo-setup.md).
+
+## Configuring secrets for GitHub Actions
+
+If your tests cases are passing locally (when you run `npm test`) but
+are failing when run as Continuous Integration (CI) tests on GitHub Actions
+then it may be because you need to set up secrets for GitHub Actions.
+
+That process is explained here:
+[docs/auth0-github-actions.md](./docs/auth0-github-actions.md).
