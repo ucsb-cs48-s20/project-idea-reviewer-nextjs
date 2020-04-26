@@ -12,4 +12,9 @@ describe("Home Page", () => {
   it("has a home page brand button on nav bar", () => {
     cy.get("nav.navbar * a.navbar-brand").should("exist");
   });
+
+  it("has a footer element", () => {
+    cy.visit("http://localhost:3000");
+    cy.get("footer.footer").should("exist");
+  });
 });
