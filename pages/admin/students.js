@@ -52,6 +52,26 @@ function getColumnsWithActions(actionsFn) {
     },
   ];
 }
+function csvToStudents(csv) {
+  var lines = csv.split("\n");
+  var result = [];
+  for (var i = 1; i < lines.length; i++) {
+    var obj = {};
+    if (lines[i] == undefined || lines[i].trim() == "") {
+      continue;
+    }
+    var words = lines[i].split(",");
+    for (let j = 0; j < words.length; j++) {
+      (obj.permNum = words[1]),
+        (obj.email = reformatEmail(words[10])),
+        (obj.lname = words[4]),
+        (obj.fname = words[5]),
+        (obj.section = words[8]);
+    }
+    result.push(obj);
+  }
+  return result;
+}
 
 export default function ManageStudentsPage(props) {
   const { user, initialData } = props;
@@ -134,49 +154,36 @@ export default function ManageStudentsPage(props) {
   const handleFiles = (files) => {
     var reader = new FileReader();
     reader.onload = (e) => {
-      //Split csv file data by new line so that we can skip first row which is header
-      let jsonData = reader.result.split("\n");
-      jsonData.forEach(async (element, index) => {
-        if (index) {
-          //Split csv file data by comma so that we will have column data
-          const elementRaw = element.split(",");
-          if (element) {
-            let param = {
-              permNum: elementRaw[1],
-              email: reformatEmail(elementRaw[10]),
-              lname: elementRaw[4],
-              fname: elementRaw[5],
-              section: elementRaw[8],
-            };
-            await mutate(
-              [
-                ...data,
-                {
-                  permNum: param.permNum,
-                  email: param.email,
-                  lName: param.lName,
-                  fName: param.fName,
-                  section: param.section,
-                },
-              ],
-              false
-            );
-            await fetch("/api/students", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                permNum: param.permNum,
-                email: param.email,
-                lname: param.lname,
-                fname: param.fname,
-                section: param.section,
-              }),
-            });
-            await mutate();
-          }
-        }
+      var csvToText = e.target.result;
+      var output = csvToStudents(csvToText);
+      output.forEach(async (element, index) => {
+        await mutate(
+          [
+            ...data,
+            {
+              email: element.email,
+              section: element.section,
+              fname: element.fname,
+              lname: element.lname,
+              permNum: element.permNum,
+            },
+          ],
+          false
+        );
+        await fetch("/api/students", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: element.email,
+            section: element.section,
+            fname: element.fname,
+            lname: element.lname,
+            permNum: element.permNum,
+          }),
+        });
+        await mutate();
       });
     };
     reader.readAsText(files[0]);
