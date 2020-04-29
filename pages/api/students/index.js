@@ -18,6 +18,15 @@ export async function getStudents(section) {
 }
 
 const studentConstraints = {
+  permNum: {
+    presence: true,
+  },
+  fname: {
+    presence: true,
+  },
+  lname: {
+    presence: true,
+  },
   email: {
     presence: true,
     email: true,
@@ -53,10 +62,13 @@ async function createStudent(req) {
       message: "User already exists; cannot be converted to a student",
     };
   }
-  const query = { student: student.email };
+  const query = { email: student.email };
   const mutation = {
     $setOnInsert: {
-      student: student.email,
+      permNum: student.permNum,
+      email: student.email,
+      fname: student.fname,
+      lname: student.lname,
     },
     $set: {
       role: "student",

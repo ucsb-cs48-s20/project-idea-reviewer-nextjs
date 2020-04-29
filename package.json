@@ -9,6 +9,7 @@
     "cy:run": "cypress run",
     "fix:format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .gitignore",
     "test": "npm-run-all test:*",
+    "test:jest": "jest",
     "test:format": "prettier --check \"**/*.{js,json,md}\" --ignore-path .gitignore",
     "test:cypress": "start-server-and-test dev 3000 cy:run",
     "danger": "danger"
@@ -29,15 +30,18 @@
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-table-next": "^4.0.1",
     "react-dom": "16.13.1",
+    "react-file-reader": "^1.1.4",
     "swr": "^0.2.0",
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
+    "@babel/preset-flow": "^7.9.0",
+    "heroku-dotenv": "^0.4.1",
+    "husky": "^4.2.5",
     "@rckeller/cypress-unfetch": "^1.0.1",
     "cypress": "^4.2.0",
     "danger": "^10.0.0",
-    "heroku-dotenv": "^0.4.1",
-    "husky": "^4.2.5",
+    "jest": "^25.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "2.0.4",
     "pretty-quick": "^2.0.1",

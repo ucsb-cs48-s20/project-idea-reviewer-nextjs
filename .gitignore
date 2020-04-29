@@ -40,6 +40,18 @@ yarn-error.log*
 # local env files
 .env
 
+cypress.env.json
+
+*.idea
+*.iml
+
 # cypress
 cypress/screenshots
 cypress/videos
+cypress.env.json
+
+# IDE specific files
+
+*.idea
+*.iml
+
