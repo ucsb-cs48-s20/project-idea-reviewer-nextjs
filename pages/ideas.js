@@ -101,7 +101,7 @@ function getColumnsWithActions(actionsFn) {
   ];
 }
 
-export default function ManageAdminsPage(props) {
+export default function ManageIdeasPage(props) {
   const { user, initialData } = props;
   const { showToast } = useToasts();
   const { data, mutate } = useSWR("/api/ideas", { initialData });
