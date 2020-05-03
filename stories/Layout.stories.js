@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 
 import Container from "react-bootstrap/Container";
 import { text } from "@storybook/addon-knobs";
+import { sampleUser } from "./setup";
 
 export default {
   title: "Layout",
@@ -15,13 +16,7 @@ export const loggedOutEmpty = () => {
 
 export const loggedInWithContentInContainer = () => {
   const content = text("Sample Content", "This is sample content");
-  const name = text("Name", "Phill Conrad");
-  const role = select("Role", ["admin", "student", "guest"], "guest");
-  const picture = text(
-    "Image URL",
-    "https://avatars3.githubusercontent.com/u/1119017"
-  );
-  const user = { name, role, picture };
+  const user = sampleUser();
   return (
     <Layout user={user}>
       <Container className="py-3">{content}</Container>

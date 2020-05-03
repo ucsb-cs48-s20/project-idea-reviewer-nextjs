@@ -1,5 +1,5 @@
 import React from "react";
-import { select, text } from "@storybook/addon-knobs";
+import { sampleUser } from "./setup";
 import AppNavbar from "../components/AppNavbar";
 
 export default {
@@ -12,12 +12,6 @@ export const loggedOut = () => {
 };
 
 export const loggedIn = () => {
-  const name = text("Name", "Phill Conrad");
-  const role = select("Role", ["admin", "student", "guest"], "guest");
-  const picture = text(
-    "Image URL",
-    "https://avatars3.githubusercontent.com/u/1119017"
-  );
-  const user = { name, role, picture };
+  const user = sampleUser();
   return <AppNavbar user={user} />;
 };
