@@ -12,6 +12,7 @@ These likely will not work until initial configuration is done per instructions 
 | `npm run test:format`  | Checks the project for formatting issues |
 | `npm run test:cypress` | Runs Cypress integration tests           |
 | `npm run fix:format`   | Reformats all project files              |
+| `npm run storybook`    | Runs the project storybook               |
 
 # Configuration of `.env`
 
@@ -72,3 +73,11 @@ then it may be because you need to set up secrets for GitHub Actions.
 
 That process is explained here:
 [docs/auth0-github-actions.md](./docs/auth0-github-actions.md).
+
+# Running the Storybook
+
+This project uses [Storybook](https://storybook.js.org/), an interactive environment for documenting and testing
+individual React components. To run the storybook, type `npm run storybook`. The storybook will be accessible at
+`http://localhost:6006` (or another port, if 6006 is not available).
+
+To add new component stories to the storybook, add your `<Component Name>.stories.js` files to the `/stories` folder.
