@@ -3,7 +3,7 @@ import { select, text } from "@storybook/addon-knobs";
 import AppNavbar from "../components/AppNavbar";
 
 export default {
-  title: "Navbar",
+  title: "AppNavbar",
   component: AppNavbar,
 };
 
@@ -18,5 +18,6 @@ export const loggedIn = () => {
     "Image URL",
     "https://avatars3.githubusercontent.com/u/1119017"
   );
-  return <AppNavbar user={{ name, role, picture }} />;
+  const user = { name, role, picture };
+  return <AppNavbar user={user} />;
 };
