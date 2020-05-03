@@ -12,6 +12,7 @@ These likely will not work until initial configuration is done per instructions 
 | `npm run test:format`  | Checks the project for formatting issues |
 | `npm run test:cypress` | Runs Cypress integration tests           |
 | `npm run fix:format`   | Reformats all project files              |
+| `npm run storybook`    | Runs the project storybook               |
 
 # Configuration of `.env`
 
