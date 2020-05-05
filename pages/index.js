@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import { optionalAuth } from "../utils/ssr";
 import Head from "next/head";
 import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import { FormControl, Alert } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import ReactFileReader from "react-file-reader";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -18,6 +18,7 @@ export default function HomePage(props) {
   const user = props.user;
   const [ideaTitle, setIdeaTitle] = useState("");
   const [ideaBody, setIdeaBody] = useState("");
+  const [ideaError, setIdeaError] = useState("");
   const submitIdea = useCallback(
     async (e) => {
       // override default form submission behavior
@@ -41,6 +42,7 @@ export default function HomePage(props) {
           if (data.message) {
             // we have an error message, display to user
             console.log("error message: ", data.message);
+            setIdeaError(data.message);
           } else {
             // success
             console.log("Success", data);
@@ -51,7 +53,7 @@ export default function HomePage(props) {
         "Submitted: title={" + ideaTitle + "}, body={" + ideaBody + "}"
       );
     },
-    [ideaTitle, ideaBody]
+    [ideaTitle, ideaBody, ideaError]
   );
 
   return (
@@ -66,6 +68,10 @@ export default function HomePage(props) {
         project idea, you can rate other students project ideas as they become
         available for rating.
       </p>
+
+      <Alert show={ideaError.length > 0} variant="danger">
+        {ideaError}
+      </Alert>
 
       <Form onSubmit={submitIdea} className="mb-5">
         <Form.Group>
