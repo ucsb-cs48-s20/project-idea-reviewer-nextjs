@@ -12,13 +12,67 @@ export const getServerSideProps = optionalAuth;
 export default function HomePage(props) {
   const user = props.user;
 
-  const { ideas } = useSWR("/api/ideas", fetch, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  /**
+   * Returns proper html for page body on user role and # of reviews submitted
+   */
+  function IdeaSubmissionForUser(props) {
+    const user = props.user;
 
-  if (!ideas) {
-    return <h1>Loading</h1>;
+    // unauthenticated
+    if (!user) {
+      return (
+        <Alert variant="default">Please log in to use this application</Alert>
+      );
+    }
+    // guest
+    if (!user.role || !(user.role == "student" || user.role == "admin")) {
+      return (
+        <Alert variant="danger">You are not enrolled in this course</Alert>
+      );
+    }
+    // admin
+    if (user.role === "admin") {
+      return <Alert variant="warning">Admins can not submit ideas</Alert>;
+    }
+
+    // authenticated student
+    const { data } = useSWR("/api/ideas", (url) =>
+      fetch(url).then((_) => _.json())
+    );
+
+    // waiting for data
+    if (!data) {
+      return <h1></h1>;
+    }
+    //user needs to review
+    if (data.length == 0) {
+      return <IdeaForm />;
+    }
+    // user has submitted a review
+    return (
+      <div>
+        <Alert variant="warning">
+          You must review x more project ideas.
+          <Alert.Link href="#">
+            {" "}
+            Click here to review other project ideas
+          </Alert.Link>
+        </Alert>
+        <h2>Your Project Idea</h2>
+        <table className="table">
+          <tbody>
+            <tr>
+              <th>Title</th>
+              <td>{data[0].title}</td>
+            </tr>
+            <tr>
+              <th>Details</th>
+              <td>{data[0].description}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
   }
 
   return (
@@ -27,19 +81,7 @@ export default function HomePage(props) {
         <title>Project Idea Reviewer</title>
       </Head>
       <h1>Welcome to the Project Idea Reviewer!</h1>
-      {!user && (
-        <Alert variant="default">Please log in to use this application</Alert>
-      )}
-      {user.role == "guest" && (
-        <Alert variant="danger">You are not enrolled in this course</Alert>
-      )}
-      {user.role == "admin" && (
-        <Alert variant="warning">Admins can not submit project ideas</Alert>
-      )}
-      {user.role == "student" && ideas != null && ideas == 0 && <IdeaForm />}
-      {user.role == "student" && ideas != null && ideas == 1 && (
-        <p>you have an idea (describe it here)</p>
-      )}
+      <IdeaSubmissionForUser user={user} />
     </Layout>
   );
 }

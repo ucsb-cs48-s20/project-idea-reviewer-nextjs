@@ -36,7 +36,7 @@ export default function IdeaForm(props) {
           } else {
             // success
             console.log("Success", data);
-            setIdeaError("");
+            window.location.replace("./");
           }
         });
 
@@ -75,7 +75,8 @@ export default function IdeaForm(props) {
           </p>
           <Form.Label style={{ fontWeight: "bold" }}>Idea Details</Form.Label>
           <FormControl
-            type="text"
+            as="textarea"
+            rows="3"
             value={ideaBody}
             onChange={(e) => setIdeaBody(e.target.value)}
           />
