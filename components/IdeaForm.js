@@ -15,7 +15,8 @@ export default function IdeaForm(props) {
       e.preventDefault();
       e.stopPropagation();
 
-      await fetch("/api/ideas", {
+      // get user idea
+      const response = await fetch("/api/ideas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,25 +25,23 @@ export default function IdeaForm(props) {
           title: ideaTitle,
           description: ideaBody,
         }),
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          if (data.message) {
-            // we have an error message, display to user
-            console.log("error message: ", data.message);
-            setIdeaError(data.message);
-          } else {
-            // success
-            console.log("Success", data);
-            window.location.replace("./");
-          }
-        });
+      });
 
       console.log(
         "Submitted: title={" + ideaTitle + "}, body={" + ideaBody + "}"
       );
+
+      let data = await response.json();
+
+      if (data.message) {
+        // we have an error message, display to user
+        console.log("error message: ", data.message);
+        setIdeaError(data.message);
+      } else {
+        // success
+        console.log("Success", data);
+        window.location.replace("./");
+      }
     },
     [ideaTitle, ideaBody, ideaError]
   );
