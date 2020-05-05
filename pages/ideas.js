@@ -80,17 +80,14 @@ function getColumnsWithActions(actionsFn) {
     {
       dataField: "author.fname",
       text: "first",
-      isDummyField: true,
     },
     {
       dataField: "author.lname",
       text: "last",
-      isDummyField: true,
     },
     {
       dataField: "author.email",
       text: "email",
-      isDummyField: true,
     },
     {
       dataField: "df3",
