@@ -15,6 +15,16 @@ export async function getIdeas(section) {
   return users.find(query).toArray();
 }
 
+/**
+ * Returns ideas for a given student
+ * (accessible by students at /api/ideas)
+ */
+export async function getStudentIdeas(user) {
+  const client = await initDatabase();
+  const ideas = client.collection("ideas");
+  return ideas.find({ author: user._id }).toArray();
+}
+
 const ideaConstraints = {
   title: {
     presence: true,
@@ -67,10 +77,13 @@ async function performAction(req, user) {
 
   switch (req.method) {
     case "GET":
-      if (user.role !== "admin") {
-        throw { status: 403 };
+      if (user.role === "admin") {
+        return getIdeas(section);
       }
-      return getIdeas(section);
+      if (user.role === "student") {
+        return getStudentIdeas(user);
+      }
+      throw { status: 403 };
     case "POST":
       if (user.role !== "student") {
         throw { status: 403 };
