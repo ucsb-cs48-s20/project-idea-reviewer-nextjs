@@ -14,7 +14,6 @@ describe("Home Page", () => {
   });
 
   it("has a footer element", () => {
-    cy.visit("http://localhost:3000");
     cy.get("footer.footer").should("exist");
   });
 });

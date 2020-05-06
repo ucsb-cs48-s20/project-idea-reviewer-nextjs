@@ -13,7 +13,11 @@ async function getUserSession(req) {
 }
 
 export async function optionalAuth({ req }) {
-  const user = await getUserSession(req);
+  const user = {
+    email: "colebergmann@gmail.com",
+    family_name: "Cole",
+    role: "student",
+  };
 
   if (user) {
     return {
