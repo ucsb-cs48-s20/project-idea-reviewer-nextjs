@@ -25,7 +25,15 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import adminUser from "../fixtures/adminUser.json";
+import studentUser from "../fixtures/studentUser.json";
+import guestUser from "../fixtures/guestUser.json";
 
 Cypress.Commands.add("loginAsAdmin", () =>
   cy.setCookie("AUTH", JSON.stringify(adminUser))
+);
+Cypress.Commands.add("loginAsStudent", () =>
+  cy.setCookie("AUTH", JSON.stringify(studentUser))
+);
+Cypress.Commands.add("loginAsGuest", () =>
+  cy.setCookie("AUTH", JSON.stringify(guestUser))
 );
