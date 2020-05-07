@@ -13,6 +13,7 @@ async function getUserSession(req) {
 }
 
 export async function optionalAuth({ req }) {
+  console.log(req.headers.cookie.split(";"));
   const user = await getUserSession(req);
 
   if (user) {

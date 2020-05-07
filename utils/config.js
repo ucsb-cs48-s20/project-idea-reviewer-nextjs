@@ -12,6 +12,7 @@ if (typeof window === "undefined") {
     SESSION_COOKIE_SECRET: process.env.SESSION_COOKIE_SECRET,
     SESSION_COOKIE_LIFETIME: process.env.SESSION_COOKIE_LIFETIME,
     MONGODB_URI: process.env.MONGODB_URI,
+    TESTING: process.env.TESTING,
   };
 } else {
   /**
@@ -23,5 +24,6 @@ if (typeof window === "undefined") {
     AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
     REDIRECT_URI: process.env.REDIRECT_URI,
     POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
+    TESTING: process.env.TESTING,
   };
 }
