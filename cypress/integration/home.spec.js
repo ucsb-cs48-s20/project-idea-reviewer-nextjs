@@ -1,6 +1,12 @@
-describe("Home Page", () => {
+describe("Home Page Admin", () => {
   beforeEach(() => {
     // runs before each test in the block
+
+    cy.loginAsAdmin();
+    // the above code is the equivalent of the default cypress command
+    // cy.setCookie("AUTH", JSON.stringify(adminUser))
+    // you can see this custom command defined in /cypress/support/commands.js
+
     cy.visit("http://localhost:3000");
   });
 

@@ -23,3 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+import adminUser from "../fixtures/adminUser.json";
+
+Cypress.Commands.add("loginAsAdmin", () =>
+  cy.setCookie("AUTH", JSON.stringify(adminUser))
+);
