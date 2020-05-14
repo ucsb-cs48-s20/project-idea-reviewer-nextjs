@@ -4,7 +4,7 @@ import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
 import Button from "react-bootstrap/Button";
 import BootstrapTable from "react-bootstrap-table-next";
-import { getIdeas } from "./api/ideas";
+import { getReviews } from "./api/reviews";
 import Layout from "../components/Layout";
 import { createRequiredAuth } from "../utils/ssr";
 import { serializeDocument } from "../utils/mongodb";
@@ -13,26 +13,9 @@ import { useToasts } from "../components/Toasts";
 export const getServerSideProps = async ({ req, res }) => {
   const ssr = await createRequiredAuth({ roles: ["admin"] })({ req, res });
 
-  ssr.props.initialData = (await getIdeas()).map(serializeDocument);
+  ssr.props.initialData = (await getReviews()).map(serializeDocument);
 
   return ssr;
-};
-
-const sortCaret = (order) => {
-  if (!order) return <span>&nbsp;&nbsp;Down/Up</span>;
-  else if (order === "asc")
-    return (
-      <span>
-        &nbsp;&nbsp;Down/<span style={{ color: "var(--red)" }}>Up</span>
-      </span>
-    );
-  else if (order === "desc")
-    return (
-      <span>
-        &nbsp;&nbsp;<span style={{ color: "var(--red)" }}>Down</span>/Up
-      </span>
-    );
-  return null;
 };
 
 function getColumnsWithActions(actionsFn) {
@@ -43,54 +26,31 @@ function getColumnsWithActions(actionsFn) {
       sort: true,
     },
     {
-      dataField: "df1",
-      isDummyField: true,
-      text: "# reviews",
-      sort: true,
-      sortCaret,
-      sortValue: (_, row) => row?.reviews?.length || 0,
-      formatter: (_, row) => row?.reviews?.length || 0,
-    },
-    {
-      dataField: "df2",
-      isDummyField: true,
-      text: "avg rating",
-      formatter: (_, row) => {
-        const reviews = row?.reviews;
-
-        if (!reviews?.length) {
-          return "--";
-        }
-
-        const totalScore = reviews
-          .map((review) => review.rating)
-          .reduce((a, b) => a + b);
-
-        return totalScore / reviews.length;
-      },
-    },
-    {
       dataField: "title",
-      text: "title",
+      text: "idea title",
     },
     {
-      dataField: "description",
-      text: "details",
+      dataField: "reviews.rating",
+      text: "rating",
     },
     {
-      dataField: "author.fname",
+      dataField: "reviews.description",
+      text: "review details",
+    },
+    {
+      dataField: "reviews.author.fname",
       text: "first",
     },
     {
-      dataField: "author.lname",
+      dataField: "reviews.author.lname",
       text: "last",
     },
     {
-      dataField: "author.email",
+      dataField: "reviews.author.email",
       text: "email",
     },
     {
-      dataField: "df3",
+      dataField: "df1",
       isDummyField: true,
       text: "delete",
       formatter: actionsFn,
@@ -98,10 +58,10 @@ function getColumnsWithActions(actionsFn) {
   ];
 }
 
-export default function ManageIdeasPage(props) {
+export default function ManageReviewsPage(props) {
   const { user, initialData } = props;
   const { showToast } = useToasts();
-  const { data, mutate } = useSWR("/api/ideas", { initialData });
+  const { data, mutate } = useSWR("/api/reviews", { initialData });
 
   const deleteId = useCallback(async (ideaId) => {
     showToast(`Deleted idea ${data.find((u) => u._id === ideaId)?.title}`);
@@ -109,7 +69,7 @@ export default function ManageIdeasPage(props) {
       data.filter((u) => u._id !== ideaId),
       false
     );
-    await fetch(`/api/ideas/${ideaId}`, { method: "DELETE" });
+    await fetch(`/api/reviews/${ideaId}`, { method: "DELETE" });
     await mutate();
   }, []);
 
@@ -124,9 +84,9 @@ export default function ManageIdeasPage(props) {
   return (
     <Layout user={user}>
       <Head>
-        <title>Manage Ideas</title>
+        <title>Manage Reviews</title>
       </Head>
-      <h1>Manage Ideas</h1>
+      <h1>Manage Reviews</h1>
       <BootstrapTable keyField="_id" data={data} columns={columns} />
       <style jsx global>{`
         .table {
