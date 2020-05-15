@@ -6,19 +6,6 @@ async function deleteReview(ideaId, authorId) {
   const client = await initDatabase();
   const ideas = client.collection("ideas");
 
-  // console.log("Attempting to delete " + ideaId + " review " + reviewDescr + " by " + authorId);
-
-  // const query = {
-  //   _id: ObjectId(ideaId),
-  //   $pull: {
-  //     reviews: {
-  //       description: reviewDescr,
-  //       author: ObjectId(authorId)
-  //     }
-  //   }
-  // };
-
-  //const result = await ideas.updateOne(query);
   const result = await ideas.updateOne(
     { _id: ObjectId(ideaId) },
     {
