@@ -70,9 +70,6 @@ export default function ManageReviewsPage(props) {
           ?.reviews.author.email
       }`
     );
-    //showToast("Deleted review by " + authorId);
-
-    // If you don't equal the review we've deleted, don't get filtered out
     await mutate(
       data.filter((u) => u.reviews.author._id !== authorId),
       false
