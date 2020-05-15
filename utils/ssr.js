@@ -1,21 +1,12 @@
 import auth0 from "./auth0";
 import { attachUserMetadata } from "./user";
 import config from "./config";
+import { getTestAuthSession } from "./testAuth";
 
-async function getUserSession(req) {
+export async function getUserSession(req) {
   let session;
   if (config.USE_TEST_AUTH) {
-    const cookies = req.headers.cookie?.split(";");
-    const authCookiePrefix = "AUTH=";
-    const sessionCookie = cookies?.filter((cookie) =>
-      cookie.startsWith(authCookiePrefix)
-    )[0];
-
-    if (sessionCookie) {
-      session = {
-        user: JSON.parse(sessionCookie.slice(authCookiePrefix.length)),
-      };
-    }
+    session = getTestAuthSession(req);
   } else {
     session = await auth0.getSession(req);
   }
