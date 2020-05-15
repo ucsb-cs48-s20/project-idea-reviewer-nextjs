@@ -2,20 +2,34 @@ import { ObjectId } from "mongodb";
 import { authenticatedAction } from "../../../../utils/api";
 import { initDatabase } from "../../../../utils/mongodb";
 
-async function deleteIdea(ideaId) {
+async function deleteReview(ideaId, authorId) {
   const client = await initDatabase();
   const ideas = client.collection("ideas");
 
-  const query = {
-    _id: ObjectId(ideaId),
-  };
+  // console.log("Attempting to delete " + ideaId + " review " + reviewDescr + " by " + authorId);
 
-  const result = await ideas.deleteOne(query);
+  // const query = {
+  //   _id: ObjectId(ideaId),
+  //   $pull: {
+  //     reviews: {
+  //       description: reviewDescr,
+  //       author: ObjectId(authorId)
+  //     }
+  //   }
+  // };
 
-  if (!result.deletedCount) {
+  //const result = await ideas.updateOne(query);
+  const result = await ideas.updateOne(
+    { _id: ObjectId(ideaId) },
+    {
+      $pull: { reviews: { author: ObjectId(authorId) } },
+    }
+  );
+
+  if (!result.modifiedCount) {
     throw {
       status: 404,
-      message: "Idea not found",
+      message: "Review not found",
     };
   }
 }
@@ -29,7 +43,7 @@ async function performAction(req, user) {
 
   switch (req.method) {
     case "DELETE":
-      return deleteIdea(ideaId);
+      return deleteReview(ideaId, authorId);
   }
 
   throw { status: 405 };

@@ -63,19 +63,31 @@ export default function ManageReviewsPage(props) {
   const { showToast } = useToasts();
   const { data, mutate } = useSWR("/api/reviews", { initialData });
 
-  const deleteId = useCallback(async (ideaId) => {
-    showToast(`Deleted idea ${data.find((u) => u._id === ideaId)?.title}`);
+  const deleteId = useCallback(async (ideaId, authorId) => {
+    showToast(
+      `Deleted review by ${
+        data.find((u) => u._id === ideaId && u.reviews.author._id === authorId)
+          ?.reviews.author.email
+      }`
+    );
+    //showToast("Deleted review by " + authorId);
+
+    // If you don't equal the review we've deleted, don't get filtered out
     await mutate(
-      data.filter((u) => u._id !== ideaId),
+      data.filter((u) => u.reviews.author._id !== authorId),
       false
     );
-    await fetch(`/api/reviews/${ideaId}`, { method: "DELETE" });
+    await fetch(`/api/reviews/${ideaId}/${authorId}`, { method: "DELETE" });
     await mutate();
   }, []);
 
+  // We need to pass the _id of the idea and the authorId of rating AND the message
   const columns = getColumnsWithActions((_, row) => {
     return (
-      <Button variant="danger" onClick={() => deleteId(row._id)}>
+      <Button
+        variant="danger"
+        onClick={() => deleteId(row._id, row.reviews.author._id)}
+      >
         Delete
       </Button>
     );
