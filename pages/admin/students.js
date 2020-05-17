@@ -16,8 +16,9 @@ import { reformatEmail } from "../../utils/email";
 
 export const getServerSideProps = async ({ req, res }) => {
   const ssr = await createRequiredAuth({ roles: ["admin"] })({ req, res });
-
-  ssr.props.initialData = (await getStudents()).map(serializeDocument);
+  if (ssr) {
+    ssr.props.initialData = (await getStudents()).map(serializeDocument);
+  }
 
   return ssr;
 };

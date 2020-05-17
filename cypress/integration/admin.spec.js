@@ -24,13 +24,21 @@ describe("Admin Page", () => {
         .should("have.value", "test@ucsb.edu");
       cy.get("form").submit();
     });
+    function addTest2AsAdmin() {
+      cy.get("form");
+      cy.get('input[name="email"]')
+        .type("test2@ucsb.edu")
+        .should("have.value", "test2@ucsb.edu");
+      cy.get("form").submit();
+    }
     it("allows me to delete an admin", () => {
-      cy.contains("test@ucsb.edu")
+      addTest2AsAdmin();
+      cy.contains("test2@ucsb.edu")
         .parent("tr")
         .within(() => {
           cy.get("td").eq(2).contains("button", "Delete").click();
         });
-      cy.contains("tr").should("not.contain", "test@ucsb.edu");
+      cy.contains("tr").should("not.contain", "test2@ucsb.edu");
     });
   });
 

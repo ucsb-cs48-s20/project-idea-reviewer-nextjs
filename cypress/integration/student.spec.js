@@ -37,8 +37,28 @@ describe("Student Page", () => {
       cy.get('input[name="section"]').type("0200").should("have.value", "0200");
       cy.get("form").submit();
     });
+
+    function createTest2AsStudent() {
+      cy.get("form");
+      cy.get('input[name="fname"]')
+        .type("testFname")
+        .should("have.value", "testFname");
+      cy.get('input[name="lname"]')
+        .type("testLname")
+        .should("have.value", "testLname");
+      cy.get('input[name="perm"]')
+        .type("1234567")
+        .should("have.value", "1234567");
+      cy.get('input[name="email"]')
+        .type("test2@ucsb.edu")
+        .should("have.value", "test2@ucsb.edu");
+      cy.get('input[name="section"]').type("0200").should("have.value", "0200");
+      cy.get("form").submit();
+    }
+
     it("allows me to delete an student", () => {
-      cy.contains("test@ucsb.edu")
+      createTest2AsStudent();
+      cy.contains("test2@ucsb.edu")
         .parent("tr")
         .within(() => {
           cy.get("td").eq(5).contains("button", "Delete").click();

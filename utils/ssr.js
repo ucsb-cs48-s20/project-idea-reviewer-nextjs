@@ -50,6 +50,7 @@ export function createRequiredAuth({ roles = [] }) {
         Location: "/",
       });
       res.end();
+      return;
     }
 
     res.writeHead(302, {
