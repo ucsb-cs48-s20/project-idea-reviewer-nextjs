@@ -15,8 +15,9 @@ import { useToasts } from "../../components/Toasts";
 export const getServerSideProps = async ({ req, res }) => {
   const ssr = await createRequiredAuth({ roles: ["admin"] })({ req, res });
 
-  ssr.props.initialData = (await getAdmins()).map(serializeDocument);
-
+  if (ssr) {
+    ssr.props.initialData = (await getAdmins()).map(serializeDocument);
+  }
   return ssr;
 };
 

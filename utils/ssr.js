@@ -50,12 +50,13 @@ export function createRequiredAuth({ roles = [] }) {
         Location: "/",
       });
       res.end();
-      return;
+      return { props: {} };
     }
 
     res.writeHead(302, {
       Location: "/api/login",
     });
     res.end();
+    return { props: {} };
   };
 }

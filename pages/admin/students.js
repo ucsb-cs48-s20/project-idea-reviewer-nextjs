@@ -19,7 +19,6 @@ export const getServerSideProps = async ({ req, res }) => {
   if (ssr) {
     ssr.props.initialData = (await getStudents()).map(serializeDocument);
   }
-
   return ssr;
 };
 
