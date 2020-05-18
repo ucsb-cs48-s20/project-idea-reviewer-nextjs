@@ -1,4 +1,7 @@
 describe("Student Page", () => {
+  before(() => {
+    cy.prepareDatabase();
+  });
   context("When I am logged in as an admin", () => {
     beforeEach(() => {
       cy.loginAsAdmin();

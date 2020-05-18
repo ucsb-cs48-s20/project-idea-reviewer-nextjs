@@ -23,7 +23,7 @@ export async function performPrepareDatabase() {
     fname: "Example",
     lname: "Student",
   });
-  console.log("result=" + JSON.stringify(result));
+  console.log("Database has been reset for cypress tests");
   return result;
 }
 
@@ -40,8 +40,6 @@ export default async function prepareDatabase(req, res) {
   switch (req.method) {
     case "POST":
       const result = await performPrepareDatabase();
-      console.log("result=" + JSON.stringify(result));
-
       res.statusCode = 200;
       res.end(JSON.stringify(result));
       return;

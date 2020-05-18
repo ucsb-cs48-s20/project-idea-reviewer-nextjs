@@ -1,4 +1,7 @@
 describe("Home Page Admin", () => {
+  before(() => {
+    cy.prepareDatabase();
+  });
   beforeEach(() => {
     // runs before each test in the block
 
