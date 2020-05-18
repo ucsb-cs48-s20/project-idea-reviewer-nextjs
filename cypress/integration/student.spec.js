@@ -32,13 +32,13 @@ describe("Student Page", () => {
         .type("1234567")
         .should("have.value", "1234567");
       cy.get('input[name="email"]')
-        .type("test@ucsb.edu")
-        .should("have.value", "test@ucsb.edu");
+        .type("student1@ucsb.edu")
+        .should("have.value", "student1@ucsb.edu");
       cy.get('input[name="section"]').type("0200").should("have.value", "0200");
       cy.get("form").submit();
     });
 
-    function createTest2AsStudent() {
+    function createAsStudent(email) {
       cy.get("form");
       cy.get('input[name="fname"]')
         .type("testFname")
@@ -49,21 +49,19 @@ describe("Student Page", () => {
       cy.get('input[name="perm"]')
         .type("1234567")
         .should("have.value", "1234567");
-      cy.get('input[name="email"]')
-        .type("test2@ucsb.edu")
-        .should("have.value", "test2@ucsb.edu");
+      cy.get('input[name="email"]').type(email).should("have.value", email);
       cy.get('input[name="section"]').type("0200").should("have.value", "0200");
       cy.get("form").submit();
     }
 
     it("allows me to delete an student", () => {
-      createTest2AsStudent();
-      cy.contains("test2@ucsb.edu")
+      createAsStudent("student2@ucsb.edu");
+      cy.contains("student2@ucsb.edu")
         .parent("tr")
         .within(() => {
           cy.get("td").eq(5).contains("button", "Delete").click();
         });
-      cy.contains("tr").should("not.contain", "test@ucsb.edu");
+      cy.contains("tr").should("not.contain", "student2@ucsb.edu");
     });
   });
 
