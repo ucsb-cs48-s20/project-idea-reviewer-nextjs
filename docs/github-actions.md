@@ -5,7 +5,7 @@ secrets for Auth0, MongoDB, etc. and our test cases will pass.
 
 For a more detailed explanation, read all the way to the end of the file.
 
-# How to configure the secfrets for Auth0
+# How to configure the secrets for Auth0
 
 To configure the Auth0 secrets for GitHub Actions, go to your repo on GitHub.
 
