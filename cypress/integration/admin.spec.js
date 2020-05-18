@@ -20,25 +20,23 @@ describe("Admin Page", () => {
     it("allows me to fill the form", () => {
       cy.get("form");
       cy.get('input[name="email"]')
-        .type("test@ucsb.edu")
-        .should("have.value", "test@ucsb.edu");
+        .type("admin1@ucsb.edu")
+        .should("have.value", "admin1@ucsb.edu");
       cy.get("form").submit();
     });
-    function addTest2AsAdmin() {
+    function addAdmin(email) {
       cy.get("form");
-      cy.get('input[name="email"]')
-        .type("test2@ucsb.edu")
-        .should("have.value", "test2@ucsb.edu");
+      cy.get('input[name="email"]').type(email).should("have.value", email);
       cy.get("form").submit();
     }
     it("allows me to delete an admin", () => {
-      addTest2AsAdmin();
-      cy.contains("test2@ucsb.edu")
+      addAdmin("admin2@ucsb.edu");
+      cy.contains("admin2@ucsb.edu")
         .parent("tr")
         .within(() => {
           cy.get("td").eq(2).contains("button", "Delete").click();
         });
-      cy.contains("tr").should("not.contain", "test2@ucsb.edu");
+      cy.contains("tr").should("not.contain", "admin2@ucsb.edu");
     });
   });
 

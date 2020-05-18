@@ -1,13 +1,13 @@
 # Configuring Secrets for Github Actions
 
 Why we need do do this: So that the test cases will have access to the
-secrets for Auth0, and our test cases will pass.
+secrets for Auth0, MongoDB, etc. and our test cases will pass.
 
 For a more detailed explanation, read all the way to the end of the file.
 
-# How to configure
+# How to configure the secfrets for Auth0
 
-To configure the secrets for GitHub Actions, go to your repo on GitHub.
+To configure the Auth0 secrets for GitHub Actions, go to your repo on GitHub.
 
 Click the "Settings" tab for repo, and the find the "Secrets" tab in the left sidebar.
 
@@ -27,6 +27,14 @@ of the values you set up in the instructions listed in [docs/auth0-localhost.md]
 At this point, if you push a new commit to GitHub to trigger a new build,
 you should see that the tests pass (provided they were passing in the
 starter code repo at the time you copied it.)
+
+# Additional Secrets for MongoDB
+
+Using the same process, you will need to add a secret for
+`MONGODB_URI` and `MONGODB_URI_TEST` that points to the database you want
+to use when running tests via GitHub actions. Typically, this should be
+a different MongoDB instance (cluster) from the one you use for development,
+QA and production.
 
 # A more detailed explanation
 
