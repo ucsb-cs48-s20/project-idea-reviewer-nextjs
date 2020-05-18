@@ -1,8 +1,15 @@
 import auth0 from "./auth0";
 import { attachUserMetadata } from "./user";
+import config from "./config";
+import { getTestAuthSession } from "./testAuth";
 
-async function getUserSession(req) {
-  const session = await auth0.getSession(req);
+export async function getUserSession(req) {
+  let session;
+  if (config.USE_TEST_AUTH) {
+    session = getTestAuthSession(req);
+  } else {
+    session = await auth0.getSession(req);
+  }
 
   if (session && session.user) {
     await attachUserMetadata(session.user);
@@ -43,11 +50,13 @@ export function createRequiredAuth({ roles = [] }) {
         Location: "/",
       });
       res.end();
+      return { props: {} };
     }
 
     res.writeHead(302, {
       Location: "/api/login",
     });
     res.end();
+    return { props: {} };
   };
 }

@@ -6,13 +6,15 @@ A nextjs version of https://github.com/ucsb-cs48-s20/project-idea-reviewer
 
 These likely will not work until initial configuration is done per instructions below.
 
-| Command                | Description                              |
-| ---------------------- | ---------------------------------------- |
-| `npm run test`         | Runs entire test suite                   |
-| `npm run test:format`  | Checks the project for formatting issues |
-| `npm run test:cypress` | Runs Cypress integration tests           |
-| `npm run fix:format`   | Reformats all project files              |
-| `npm run storybook`    | Runs the project storybook               |
+| Command                        | Description                              |
+| ------------------------------ | ---------------------------------------- |
+| `npm run test`                 | Runs entire test suite                   |
+| `npm run test:format`          | Checks the project for formatting issues |
+| `npm run test:cypress`         | Runs Cypress integration tests           |
+| `npm run cy:start-test-server` | Run app locally in cypress test mode     |
+| `npm run cy:run`               | Run Cypress standalone                   |
+| `npm run fix:format`           | Reformats all project files              |
+| `npm run storybook`            | Runs the project storybook               |
 
 # Configuration of `.env`
 
@@ -72,7 +74,7 @@ are failing when run as Continuous Integration (CI) tests on GitHub Actions
 then it may be because you need to set up secrets for GitHub Actions.
 
 That process is explained here:
-[docs/auth0-github-actions.md](./docs/auth0-github-actions.md).
+[docs/auth0-github-actions.md](./docs/github-actions.md).
 
 # Running the Storybook
 

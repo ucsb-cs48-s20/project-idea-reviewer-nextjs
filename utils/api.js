@@ -1,11 +1,12 @@
 import auth0 from "./auth0";
 import { attachUserMetadata } from "./user";
+import config from "./config";
+import { getUserSession } from "./ssr";
 
 export function authenticatedAction(actionFn) {
-  return auth0.requireAuthentication(async function (req, res) {
+  async function apiHandler(req, res) {
     try {
-      const { user } = await auth0.getSession(req);
-      await attachUserMetadata(user);
+      const user = await getUserSession(req);
 
       const actionResult = await actionFn(req, user);
 
@@ -17,5 +18,9 @@ export function authenticatedAction(actionFn) {
         .status(error.status || 500)
         .end(error.message && JSON.stringify({ message: error.message }));
     }
-  });
+  }
+  if (config.USE_TEST_AUTH) {
+    return apiHandler;
+  }
+  return auth0.requireAuthentication(apiHandler);
 }
