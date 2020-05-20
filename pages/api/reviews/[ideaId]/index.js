@@ -9,15 +9,15 @@ const reviewConstraints = {
     numericality: {
       greaterThanOrEqualTo: 1,
       lessThanOrEqualTo: 5,
-      onlyInteger: true
-    }
+      onlyInteger: true,
+    },
   },
   description: {
     presence: true,
     length: {
-      minimum: 30
-    }
-  }
+      minimum: 30,
+    },
+  },
 };
 
 async function addReview(req, user, ideaId) {
@@ -26,13 +26,13 @@ async function addReview(req, user, ideaId) {
   try {
     newReview = await validate.async(req.body, reviewConstraints, {
       cleanAttributes: true,
-      format: "flat"
+      format: "flat",
     });
-  } catch(err) {
+  } catch (err) {
     throw {
       status: 400,
-      message: err.join(", ")
-    }
+      message: err.join(", "),
+    };
   }
 
   newReview.author = ObjectId(user._id);
@@ -41,33 +41,36 @@ async function addReview(req, user, ideaId) {
   const ideas = client.collection("ideas");
   const idea = await ideas.findOne({ _id: ObjectId(ideaId) });
 
-  if(!idea) {
+  if (!idea) {
     throw {
       status: 400,
-      message: "This idea does not exist"
-    }
-  }
-  else if(idea.author.toString() === user._id) {
+      message: "This idea does not exist",
+    };
+  } else if (idea.author.toString() === user._id) {
     throw {
-        status: 400,
-        message: "User cannot review their own idea"
-      }
-  }
-  else if(idea.reviews && idea.reviews.filter((review) => { return review.author.toString() === user._id }).length !== 0) {
+      status: 400,
+      message: "User cannot review their own idea",
+    };
+  } else if (
+    idea.reviews &&
+    idea.reviews.filter((review) => {
+      return review.author.toString() === user._id;
+    }).length !== 0
+  ) {
     throw {
       status: 409,
-      message: "User has already submitted a review for this idea"
-    }
+      message: "User has already submitted a review for this idea",
+    };
   }
 
   await ideas.updateOne(
     { _id: ObjectId(ideaId) },
     {
       $push: {
-        reviews: newReview
-      }
+        reviews: newReview,
+      },
     }
-  )
+  );
 
   return newReview;
 }
