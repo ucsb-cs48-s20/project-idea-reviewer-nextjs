@@ -16,6 +16,7 @@ const reviewConstraints = {
     presence: true,
     length: {
       minimum: 30,
+      maximum: 255,
     },
   },
 };
