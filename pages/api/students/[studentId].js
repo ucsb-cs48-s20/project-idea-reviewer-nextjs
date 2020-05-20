@@ -6,6 +6,17 @@ async function deleteStudent(studentId) {
   const client = await initDatabase();
   const users = client.collection("users");
 
+  // the check against the string version of "undefined"
+  // is NOT a coding error; we literally saw it have the
+  // string value "undefined" for reasons that elude us.
+
+  if (studentId === undefined || studentId === "undefined") {
+    throw {
+      status: 400,
+      message: "studentId should not be undefined",
+    };
+  }
+
   const query = {
     _id: ObjectId(studentId),
     role: "student",

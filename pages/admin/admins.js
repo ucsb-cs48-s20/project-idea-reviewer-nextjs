@@ -15,8 +15,9 @@ import { useToasts } from "../../components/Toasts";
 export const getServerSideProps = async ({ req, res }) => {
   const ssr = await createRequiredAuth({ roles: ["admin"] })({ req, res });
 
-  ssr.props.initialData = (await getAdmins()).map(serializeDocument);
-
+  if (ssr) {
+    ssr.props.initialData = (await getAdmins()).map(serializeDocument);
+  }
   return ssr;
 };
 
@@ -82,7 +83,11 @@ export default function ManageAdminsPage(props) {
     }
 
     return (
-      <Button variant="danger" onClick={() => deleteAdmin(row._id)}>
+      <Button
+        name="delete"
+        variant="danger"
+        onClick={() => deleteAdmin(row._id)}
+      >
         Delete
       </Button>
     );
@@ -100,10 +105,13 @@ export default function ManageAdminsPage(props) {
           <FormControl
             type="text"
             value={newAdminEmail}
+            name="email"
             onChange={(e) => setNewAdminEmail(e.target.value)}
           />
         </Form.Group>
-        <Button type="submit">Add Admin</Button>
+        <Button type="submit" name="submit">
+          Add Admin
+        </Button>
       </Form>
       <BootstrapTable keyField="_id" data={data} columns={columns} />
     </Layout>

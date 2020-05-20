@@ -16,9 +16,9 @@ import { reformatEmail } from "../../utils/email";
 
 export const getServerSideProps = async ({ req, res }) => {
   const ssr = await createRequiredAuth({ roles: ["admin"] })({ req, res });
-
-  ssr.props.initialData = (await getStudents()).map(serializeDocument);
-
+  if (ssr) {
+    ssr.props.initialData = (await getStudents()).map(serializeDocument);
+  }
   return ssr;
 };
 
@@ -199,42 +199,49 @@ export default function ManageStudentsPage(props) {
           <Form.Label>First Name</Form.Label>
           <FormControl
             type="text"
+            name="fname"
             value={newStudentFname}
             onChange={(e) => setNewStudentFname(e.target.value)}
           />
           <Form.Label>Last Name</Form.Label>
           <FormControl
             type="text"
+            name="lname"
             value={newStudentLname}
             onChange={(e) => setNewStudentLname(e.target.value)}
           />
           <Form.Label>Perm</Form.Label>
           <FormControl
             type="text"
+            name="perm"
             value={newStudentPermNum}
             onChange={(e) => setNewStudentPermNum(e.target.value)}
           />
           <Form.Label>Email Address</Form.Label>
           <FormControl
             type="text"
+            name="email"
             value={newStudentEmail}
             onChange={(e) => setNewStudentEmail(e.target.value)}
           />
           <Form.Label>Section</Form.Label>
           <FormControl
             type="text"
+            name="section"
             value={newStudentSection}
             onChange={(e) => setNewStudentSection(e.target.value)}
           />
         </Form.Group>
-        <Button type="submit">Add Student</Button>
+        <Button type="submit" name="submit">
+          Add Student
+        </Button>
       </Form>
       <ReactFileReader
         fileTypes={[".csv"]}
         multipleFiles={true}
         handleFiles={handleFiles}
       >
-        <Button>Upload CSV</Button>
+        <Button name="uploadcsv">Upload CSV</Button>
       </ReactFileReader>
       <br />
       <BootstrapTable keyField="_id" data={data} columns={columns} />

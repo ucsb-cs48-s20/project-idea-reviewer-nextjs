@@ -7,12 +7,32 @@ export async function getIdeas(section) {
   const users = client.collection("ideas");
 
   const query = {};
+  const agg = [
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "author",
+      },
+    },
+    {
+      $unwind: {
+        path: "$author",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+  ];
 
   if (section) {
-    query.section = section;
+    agg.push({
+      $match: {
+        "author.section": section,
+      },
+    });
   }
 
-  return users.find(query).toArray();
+  return users.aggregate(agg).toArray();
 }
 
 /**
